@@ -1,9 +1,9 @@
 @extends('main')
 
 @section('main')
-    <div class="card col-md-8 ms-auto" style="overflow-y: scroll; height:100vh;">
+    <div class="card col-md-8 ms-auto">
         <div class="card-body">
-            <div class="card-header bg-main text-white row" style="position:sticky; top:0;z-index:50;width:100%">
+            <div class="card-header bg-main text-white row content">
                 <h4 class="text-white col-md-10">List Update Novel Terbaru</h4>
                 <button class="btn btn-outline-light col-md-2 ms-auto refresh" onclick="location.reload()"><span><i
                             class="fa fa-sync-alt" aria-hidden="true"></i></span></button>
@@ -27,8 +27,8 @@
                 </div> --}}
 
                 @foreach ($items as $item)
-                    <div class="card card-hover col-lg-3 col-md-3 text-center">
-                        <a href="{{ $item->get_permalink() }}">
+                    <div class="card card-hover col-lg-3 col-md-3 text-center" data-aos="fade-down">
+                        <a href="{{ $item->get_permalink() }}" target="_blank">
                             @php
                                 $thumb = $item->get_enclosure()->get_thumbnail();
                                 if ($thumb == null) {

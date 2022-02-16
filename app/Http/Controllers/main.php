@@ -42,10 +42,18 @@ class main extends Controller
         return $ft;
     }
 
+    public function listftall()
+    {
+        $ftall = DB::table('ft')->inRandomOrder()->get();
+        return $ftall;
+    }
+
+
     public function daftarft(){
+        $listftall = $this->listftall();
         $listft = $this->listft();
 
-        return View::make('listft', ['listft' => $listft] );
+        return View::make('listft', ['listft' => $listft, 'listftall' => $listftall] );
     }
 
     public function carift(Request $request) { 

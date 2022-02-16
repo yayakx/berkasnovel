@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\main;
+use App\Http\Controllers\user;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,6 @@ Route::get('/', [main::class, 'main']);
 Route::post('/carinovel', [main::class, 'carinovel']);
 Route::post('/carift', [main::class, 'carift']);
 Route::get('/daftarft', [main::class, 'daftarft']);
+Route::get('/login', [user::class, 'login']);
+Route::get('/p_login', [user::class, 'p_login'])->name('p_login');
 

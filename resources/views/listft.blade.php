@@ -19,7 +19,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($listft as $dataft)
+                        @foreach ($listftall as $dataft)
                         @php
                             $link = str_replace(array('rss.xml', '/feed'), '', $dataft->url_ft);
                         @endphp   

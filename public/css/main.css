@@ -1,3 +1,19 @@
+.sidemenu {
+  position:fixed;
+  left:0; 
+  top:0;
+  z-index:51;
+  padding-top: 10vh;
+  overflow-x:hidden;
+}
+
+.content {
+  position:sticky; 
+  top:10vh;
+  z-index:50;
+  width:100%;  
+}
+
 .bg-main {
     background-color: #0066cc !important;
 }
@@ -36,3 +52,8 @@
   }
 }
 
+@media screen and (max-width: 450px) {
+  .sidemenu {
+    position: static;
+  }  
+}

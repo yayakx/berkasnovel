@@ -1,7 +1,7 @@
 @extends('header')
 
 @section('content')
-    <nav class="navbar navbar-expand-lg navbar-dark bg-main ps-3 pe-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-main ps-3 pe-3" style="position:sticky; top:0;z-index:99;">
         <a class="navbar-brand" href="/">
             <h5>BerkasNovel</h5>
         </a>
@@ -26,16 +26,21 @@
                     FT?</button></a>
             <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal"
                 data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>
-            <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal"
-                data-bs-target="#staytune"><i class="fa fa-sign-in-alt"></i> Masuk</button>
+            <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i>
+                Masuk</a>
         </div>
     </nav>
 
 
 
-    <div class="row">
+    <div class="row">        
 
-        <div class="col-md-4 ">
+        <div class="col-md-4 sidemenu">
+
+            <div class="card">
+                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBerkasNovel&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=366781520125931" height="80px" class="mx-auto" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            </div>
+
             <div class="card me-auto h-10">
                 <div class="card-body container">
                     <div class="card-header bg-main">
@@ -45,7 +50,7 @@
                     </div>
                     <div class="row">
                         @foreach ($listft as $dataft)
-                            <div class="col-lg-4 col-sm-4">
+                            <div class="col-lg-4 col-sm-4" data-aos="fade-down">
                                 <h5 class="card-text mt-2"><a class="namaft badge rounded-pill none"
                                         href="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}"
                                         target="_blank">{{ $dataft->nama_ft }}</a></h5>
@@ -53,6 +58,28 @@
                         @endforeach
                         <h5 class="col-md card-text mt-2"><a class="namaft badge rounded-pill none"
                                 href="/daftarft">Selengkapnya...</a></h5>
+                    </div>
+                </div>
+            </div>            
+
+            <div class="card me-auto h-10 col-md">
+                <div class="card-body">
+                    <h4 class="card-header bg-main text-white">Novel Berdasarkan FT</h4>
+                    <div>
+                        <div>
+                            <div class="col-md mt-3">
+                                <form action="/carift" method="post">
+                                    @csrf
+                                    <select class="form-control mb-2" name="nama_ft" id="nama_ft" readonly>
+                                        @foreach ($listft as $dataft)
+                                            <option value="{{ $dataft->url_ft }}">{{ $dataft->nama_ft }}</option>
+                                        @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-secondary col-md-12 mt-1">Cari Update
+                                        Terbaru</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -77,29 +104,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card me-auto h-10 col-md">
-                <div class="card-body">
-                    <h4 class="card-header bg-main text-white">Novel Berdasarkan FT</h4>
-                    <div>
-                        <div>
-                            <div class="col-md mt-3">
-                                <form action="/carift" method="post">
-                                    @csrf
-                                    <select class="form-control mb-2" name="nama_ft" id="nama_ft" readonly>
-                                        @foreach ($listft as $dataft)
-                                            <option value="{{ $dataft->url_ft }}">{{ $dataft->nama_ft }}</option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-secondary col-md-12 mt-1">Cari Update Terbaru</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
 
         </div>
 
@@ -157,10 +161,6 @@
     <script>
         // Hover Shadow
         $(document).ready(function() {
-            // executes when HTML-Document is loaded and DOM is ready
-            console.log("document is ready");
-
-
             $(".card-hover").hover(
                 function() {
                     $(this).addClass('shadow-lg').css('cursor', 'pointer');
@@ -169,8 +169,6 @@
                     $(this).removeClass('shadow-lg');
                 }
             );
-
-            // document ready  
         });
 
         // Random Badge Color
@@ -185,8 +183,18 @@
         // Select2
         $(document).ready(function() {
             $("#nama_ft").select2({
-                
+
             });
         });
+
+        // AOS
+        // document.addEventListener("mousemove", e => {
+        //     AOS.init();
+        //     AOS.refresh();
+        // });
+        $(document).ready(function() {
+            AOS.init();
+        });
+        
     </script>
 @endsection
