@@ -1,0 +1,38 @@
+.bg-main {
+    background-color: #0066cc !important;
+}
+
+.font-14 {
+  font-size: 14px;  
+}
+
+.none {
+  text-decoration: none;
+}
+
+.card-hover:hover {
+  transform: scale(1.05); 
+  z-index: 49;
+  /* text-shadow: 0 0 10px #ff3a8c; */
+}
+
+.space-2 {
+  line-height: 1.3;
+}
+
+.refresh span:hover {    
+    display: inline-block;
+    -webkit-animation: infinite-spinning 1s ease-out 0s infinite normal;
+    animation: infinite-spinning 1s ease-out 0s infinite normal;
+}
+    
+
+@keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
