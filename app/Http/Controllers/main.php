@@ -31,9 +31,10 @@ class main extends Controller
         $feed = FeedReader::read($db);
         $items = $feed->get_items();
 
+        $listftall = $this->listftall();
         $listft = $this->listft();
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft]);
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
     }
 
     public function listft()
@@ -41,13 +42,12 @@ class main extends Controller
         $ft = DB::table('ft')->inRandomOrder()->limit(8)->get();
         return $ft;
     }
-
-    public function listftall()
+    
+     public function listftall()
     {
-        $ftall = DB::table('ft')->inRandomOrder()->get();
-        return $ftall;
+        $ft = DB::table('ft')->inRandomOrder()->get();
+        return $ft;
     }
-
 
     public function daftarft(){
         $listftall = $this->listftall();
@@ -62,9 +62,10 @@ class main extends Controller
         $feed = FeedReader::read($db);
         $items = $feed->get_items();   
 
+        $listftall = $this->listftall();
         $listft = $this->listft();
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft] );
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall] );
     }    
 
 
@@ -75,8 +76,9 @@ class main extends Controller
         $feed = FeedReader::read($data);
         $items = $feed->get_items();        
 
+        $listftall = $this->listftall();
         $listft = $this->listft();
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft] );
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall] );
     }
 }

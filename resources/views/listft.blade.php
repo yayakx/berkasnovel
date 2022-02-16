@@ -5,7 +5,7 @@
   <div class="card col-md-8 ms-auto" style="overflow-y: scroll; height:650px;">    
     <div class="card-body">
         <div class="card-header bg-main text-white row" style="position:sticky; top:0;z-index:50;width:100%">
-            <h4 class="text-white col-md-10" >List Fan Translation yang Terdaftar</h4>
+            <h4 class="text-white col-md-10" >List Fan Translation yang Terdaftar  ({{$listftall->count()}})</h4>
             <button class="btn btn-outline-light col-md-2 refresh" onclick="location.reload()"><i class="fa fa-sync-alt" aria-hidden="true"></i></button> 
         </div>
             <div class="col-md mt-2">                     

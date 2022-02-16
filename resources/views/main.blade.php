@@ -24,10 +24,14 @@
             </ul>
             <a href="/tambahft"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
                     FT?</button></a>
-            <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal"
-                data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>
-            <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i>
-                Masuk</a>
+                    @if (Auth::check() == true)
+                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> Profil</a>            
+                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/logout"><i class="fa fa-sign-out-alt"></i> Keluar</a>                
+                    @else
+                    <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal" data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>
+                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i> Masuk</a>            
+                    @endif
+            
         </div>
     </nav>
 
@@ -71,7 +75,7 @@
                                 <form action="/carift" method="post">
                                     @csrf
                                     <select class="form-control mb-2" name="nama_ft" id="nama_ft" readonly>
-                                        @foreach ($listft as $dataft)
+                                        @foreach ($listftall as $dataft)
                                             <option value="{{ $dataft->url_ft }}">{{ $dataft->nama_ft }}</option>
                                         @endforeach
                                     </select>

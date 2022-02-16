@@ -15,10 +15,10 @@ use App\Http\Controllers\user;
 |
 */
 
-Route::get('/', [main::class, 'main']);
+Route::get('/', [main::class, 'main'])->name('main');
 Route::post('/carinovel', [main::class, 'carinovel']);
 Route::post('/carift', [main::class, 'carift']);
 Route::get('/daftarft', [main::class, 'daftarft']);
-Route::get('/login', [user::class, 'login']);
-Route::get('/p_login', [user::class, 'p_login'])->name('p_login');
+Route::get('/login', [user::class, 'login'])->name('login');
+Route::post('/p_login', [user::class, 'p_login'])->name('p_login');
 
