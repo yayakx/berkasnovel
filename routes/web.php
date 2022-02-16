@@ -21,5 +21,7 @@ Route::post('/carift', [main::class, 'carift']);
 Route::get('/daftarft', [main::class, 'daftarft']);
 Route::get('/login', [user::class, 'login'])->name('login');
 Route::post('/p_login', [user::class, 'p_login'])->name('p_login');
+Route::get('/daftar', [user::class, 'daftar'])->name('daftar');
+Route::post('/p_daftar', [user::class, 'p_daftar'])->name('p_daftar');
 Route::get('/logout', [user::class, 'logout'])->name('logout');
 

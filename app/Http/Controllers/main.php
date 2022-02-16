@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use FeedReader;
 use View;
 use DB;
@@ -11,30 +14,22 @@ class main extends Controller
 {
     public function main()
     {
-        // $feed = FeedReader::read(array(
-        //     'https://zerokaito.blogspot.com/rss.xml',
-        //     'https://kiminovel.com/rss.xml',
-        // ));
-        // // $feed = FeedReader::read('https://zerokaito.blogspot.com/rss.xml','https://kiminovel.com/rss.xml');
-        // $feed->set_item_class();
-        // $feed->enable_cache(true);
-        // $feed->set_cache_location($_SERVER['DOCUMENT_ROOT']);
-        // $feed->set_cache_duration(3600);
-        // $feed->init();
-        // $feed->handle_content_type();
-        // $items = $feed->get_items();
-        
-        
-        // return View::make('listupdate', ['items' => $items]);
-
         $db = DB::table('ft')->pluck('url_ft')->toArray();
         $feed = FeedReader::read($db);
-        $items = $feed->get_items();
+        $data = $feed->get_items();        
+        $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
         
         return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
+    }
+
+    public function paginate($items, $perPage = 24, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
     public function listft()

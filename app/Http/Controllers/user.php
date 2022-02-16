@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Session;
 use Validator;
+use DB;
+use Carbon\Carbon;
 
 class user extends Controller
 {
@@ -13,13 +15,13 @@ class user extends Controller
     {
         if (Auth::check()) {
             return redirect('/');
-        }else{
+        } else {
             return view('login');
         }
     }
 
     public function p_login(Request $request)
-    {        
+    {
         $rules = [
             'email'                 => 'required|email',
             'password'              => 'required|string'
@@ -34,7 +36,7 @@ class user extends Controller
  
         $validator = Validator::make($request->all(), $rules, $messages);
  
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput($request->all);
         }
  
@@ -43,22 +45,49 @@ class user extends Controller
             'password'  => $request->input('password'),
         ];
  
-        Auth::attempt($data);        
+        Auth::attempt($data);
         
         if (Auth::check()) { //true
-            if (Auth::user()->role == '0') {                              
+            if (Auth::user()->role == '1') {
                 return redirect()->route('main');
             }
-            if (Auth::user()->role == '1') { 
+            if (Auth::user()->role == '2') {
                 return redirect()->route('main');
             }
-        
-                
         } else { // false
  
             Session::flash('error', 'Email atau password salah');
             return redirect()->route('login');
-        }    
+        }
+    }
+
+    public function daftar()
+    {
+        if (Auth::check()) {
+            return redirect('/');
+        } else {
+            return view('daftar');
+        }
+    }
+
+    public function p_daftar(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|min:3|max:50',
+            'email' => 'email',            
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        DB::table('users')-> insert([            
+            'name' => $request->name,            
+            'email' => $request->email,            
+            'password' => bcrypt($request->password),            
+            'role' => '2',
+            'created_at' => Carbon::now()->toDateTimeString(),
+                      
+        ]);
+        
+        return redirect('/login') -> with('success', 'Pendaftaraan berhasil, silakan masuk ke akun Anda'); 
     }
 
     public function logout()
