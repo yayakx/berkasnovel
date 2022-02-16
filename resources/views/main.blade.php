@@ -25,7 +25,7 @@
             <a href="/tambahft"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
                     FT?</button></a>
                     @if (Auth::check() == true)
-                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> Profil</a>            
+                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>            
                     <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/logout"><i class="fa fa-sign-out-alt"></i> Keluar</a>                
                     @else
                     <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal" data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>

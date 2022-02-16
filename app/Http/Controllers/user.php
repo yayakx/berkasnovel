@@ -61,7 +61,7 @@ class user extends Controller
         }    
     }
 
-    public function p_logout()
+    public function logout()
     {
         Auth::logout();
         return redirect('/');

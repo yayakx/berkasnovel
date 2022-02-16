@@ -4,7 +4,7 @@
     <div class="card col-md-8 ms-auto">
         <div class="card-body">
             <div class="card-header bg-main text-white row content">
-                <h4 class="text-white col-md-10">List Update Novel Terbaru</h4>
+                <h4 class="text-white col-md-10">List Update Novel Terbaru ({{count($items)}})</h4>
                 <button class="btn btn-outline-light col-md-2 ms-auto refresh" onclick="location.reload()"><span><i
                             class="fa fa-sync-alt" aria-hidden="true"></i></span></button>
             </div>
