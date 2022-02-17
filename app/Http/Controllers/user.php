@@ -78,16 +78,21 @@ class user extends Controller
             'password' => 'required|confirmed|min:6',
         ]);
 
-        DB::table('users')-> insert([            
-            'name' => $request->name,            
-            'email' => $request->email,            
-            'password' => bcrypt($request->password),            
+        if (DB::table('users')->where('email', '=', $request->email)->exists()) {
+            return redirect('/daftar') -> with('error', 'Pendaftaraan Gagal, Email sudah terdaftar');
+        }
+
+        else {
+            DB::table('users')-> insert([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
             'role' => '2',
             'created_at' => Carbon::now()->toDateTimeString(),
                       
-        ]);
-        
-        return redirect('/login') -> with('success', 'Pendaftaraan berhasil, silakan masuk ke akun Anda'); 
+        ]);        
+            return redirect('/login') -> with('success', 'Pendaftaraan berhasil, silakan masuk ke akun Anda');
+        }
     }
 
     public function logout()

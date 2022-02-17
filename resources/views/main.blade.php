@@ -22,7 +22,7 @@
             <a class="nav-link disabled" href="#">Donasi</a>                       
         </li> --}}
             </ul>
-            <a href="/tambahft"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
+            <a href="#"  data-bs-toggle="modal" data-bs-target="#staytune"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
                     FT?</button></a>
                     @if (Auth::check() == true)
                     <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>            
