@@ -113,7 +113,7 @@
                         <div class="form-group mt-2">
                             <label for="">Link FT</label>
                             <input type="text" name="url_ft" id="url_ft" class="form-control"
-                                placeholder="Masukkan Link FT" aria-describedby="helpId">
+                                placeholder="Contoh: https://kiminovel.com" aria-describedby="helpId">
                         </div>
                         <button class="btn btn-dark mt-3 col-md-12" type="submit"> Tambahkan</button>
                     </form>
