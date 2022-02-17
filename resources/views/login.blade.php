@@ -17,14 +17,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#staytune">Forum</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/private">Private List</a>
+            </li>
             {{-- <li class="nav-item">
         <a class="nav-link disabled" href="#">Donasi</a>                       
     </li> --}}
         </ul>
         <a href="/tambahft"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
                 FT?</button></a>
-        <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal"
-            data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>
+        <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1"  href="/daftar"><i class="fa fa-user"></i> Daftar</a>
         <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i> Masuk</a>
     </div>
 </nav>

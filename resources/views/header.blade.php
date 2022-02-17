@@ -22,3 +22,6 @@
     @yield('content')
 </main>
 
+<footer>
+    @include('footer')
+</footer>

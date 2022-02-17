@@ -100,4 +100,13 @@ class user extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function profil()
+    {
+        if (Auth::check()) {
+            return view('profil');
+        } else {
+            return redirect('/');
+        }
+    }
 }

@@ -9,6 +9,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use FeedReader;
 use View;
 use DB;
+use Auth;
 
 class main extends Controller
 {
@@ -16,7 +17,7 @@ class main extends Controller
     {
         $db = DB::table('ft')->pluck('url_ft')->toArray();
         $feed = FeedReader::read($db);
-        $data = $feed->get_items();        
+        $data = $feed->get_items();
         $items = $this->paginate($data);
 
         $listftall = $this->listftall();
@@ -38,42 +39,122 @@ class main extends Controller
         return $ft;
     }
     
-     public function listftall()
+    public function listftall()
     {
         $ft = DB::table('ft')->inRandomOrder()->get();
         return $ft;
     }
 
-    public function daftarft(){
+    public function daftarft()
+    {
         $listftall = $this->listftall();
         $listft = $this->listft();
 
-        return View::make('listft', ['listft' => $listft, 'listftall' => $listftall] );
+        return View::make('listft', ['listft' => $listft, 'listftall' => $listftall]);
     }
 
-    public function carift(Request $request) { 
-        $kw = $request->nama_ft;   
-        $db = DB::table('ft')->where('url_ft',$kw)->pluck('url_ft')->toArray();
+    public function carift(Request $request)
+    {
+        $kw = $request->nama_ft;
+        $db = DB::table('ft')->where('url_ft', $kw)->pluck('url_ft')->toArray();
         $feed = FeedReader::read($db);
-        $items = $feed->get_items();   
+        $data = $feed->get_items();
+        $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall] );
-    }    
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
+    }
 
 
-    public function carinovel(Request $request) {
-        $kw = $request->cari;        
+    public function carinovel(Request $request)
+    {
+        $kw = $request->cari;
         $db = DB::table('ft')->pluck('url_ft')->toArray();
-        $data = preg_filter('/$/', '?q='.$kw, $db);                
+        $data = preg_filter('/$/', '?q='.$kw, $db);
         $feed = FeedReader::read($data);
-        $items = $feed->get_items();        
+        $data = $feed->get_items();
+        $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall] );
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
+    }
+
+    public function private()
+    {
+        if (Auth::check()) {
+            $db = DB::table('private')->where('id_user', Auth::user()->id)->pluck('url_ft')->toArray();
+            $feed = FeedReader::read($db);
+            $data = $feed->get_items();
+            $items = $this->paginate($data);
+            $listftall = DB::table('private')->where('id_user', Auth::user()->id)->inRandomOrder()->get();
+        
+            return View::make('private', ['items' => $items, 'listftall' => $listftall]);
+        } else {
+            return redirect('/login')->with('error', 'Harap Masuk Terlebih dahulu');
+        }
+    }
+
+    public function carift_private(Request $request)
+    {
+        $kw = $request->nama_ft;
+        $db = DB::table('private')->where('url_ft', $kw)->pluck('url_ft')->toArray();
+        $feed = FeedReader::read($db);
+        $data = $feed->get_items();
+        $items = $this->paginate($data);
+
+        $listftall = DB::table('private')->where('id_user', Auth::user()->id)->inRandomOrder()->get();        
+        
+        return View::make('private', ['items' => $items, 'listftall' => $listftall]);
+    }
+
+    public function tambahft_private(Request $request)
+    {
+        $this->validate($request, [
+            'nama_ft' => 'required',
+            'url_ft' => 'required',            
+            // 'g-recaptcha-response' => 'required|captcha',
+        ]);
+        
+        $feed = FeedReader::read([
+            $request->url_ft.'/rss.xml',            
+        ]);
+        $data = $feed->get_items();
+        if ($data == null)
+        {
+            $feed = FeedReader::read([
+                $request->url_ft.'/feed',            
+            ]);
+
+            $data = $feed->get_items();
+
+            if ($data == null)
+            {
+                session()->flash("error","Gagal Ditambahkan Karena FT sudah terdaftar");
+            }
+
+            else {
+                DB::table('private')->insert([            
+                    'nama_ft' => $request->nama_ft,
+                    'url_ft' => $request->url_ft.'feed',     
+                    'id_user' => Auth::user()->id,             
+                ]);
+
+                session()->flash("success","FT Berhasil Ditambahkan");
+            }
+        }  
+        else {
+            DB::table('private')->insert([            
+                'nama_ft' => $request->nama_ft,
+                'url_ft' => $request->url_ft.'/rss.xml',     
+                'id_user' => Auth::user()->id,             
+            ]);
+            session()->flash("success","FT Berhasil Ditambahkan");
+        }      
+    
+        return redirect('/private');
     }
 }

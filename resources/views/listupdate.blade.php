@@ -52,6 +52,9 @@
         <div class="mx-auto mb-5">
             {{ $items->links('pagination') }}
         </div>
+        <div class="mx-auto">
+            Copyright &copy; 2022 <strong><a href="/" class="none"> BerkasNovel </a></strong>
+        </div>
         
     </div>
 @endsection

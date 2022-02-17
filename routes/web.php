@@ -24,4 +24,8 @@ Route::post('/p_login', [user::class, 'p_login'])->name('p_login');
 Route::get('/daftar', [user::class, 'daftar'])->name('daftar');
 Route::post('/p_daftar', [user::class, 'p_daftar'])->name('p_daftar');
 Route::get('/logout', [user::class, 'logout'])->name('logout');
+Route::get('/profil', [main::class, 'private'])->name('private');
+Route::get('/private', [main::class, 'private'])->name('private');
+Route::post('/carift_private', [main::class, 'carift_private'])->name('carift_private');;
+Route::post('/tambahft_private', [main::class, 'tambahft_private'])->name('tambahft_private');;
 

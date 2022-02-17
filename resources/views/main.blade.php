@@ -18,6 +18,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#staytune">Forum</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/private">Private List</a>
+                </li>
                 {{-- <li class="nav-item">
             <a class="nav-link disabled" href="#">Donasi</a>                       
         </li> --}}
@@ -28,7 +31,7 @@
                     <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>            
                     <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/logout"><i class="fa fa-sign-out-alt"></i> Keluar</a>                
                     @else
-                    <button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" data-bs-toggle="modal" data-bs-target="#staytune"><i class="fa fa-user"></i> Daftar</button>
+                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/daftar"><i class="fa fa-user"></i> Daftar</a>
                     <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i> Masuk</a>            
                     @endif
             
@@ -161,44 +164,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Hover Shadow
-        $(document).ready(function() {
-            $(".card-hover").hover(
-                function() {
-                    $(this).addClass('shadow-lg').css('cursor', 'pointer');
-                },
-                function() {
-                    $(this).removeClass('shadow-lg');
-                }
-            );
-        });
-
-        // Random Badge Color
-        var warna = ['bg-primary', 'bg-secondary', 'bg-warning', 'bg-success', 'bg-danger'];
-        $(document).ready(function() {
-            $(".namaft").each(function() {
-                var randomize = Math.floor(Math.random() * warna.length);
-                $(this).addClass(warna[randomize]);
-            });
-        });
-
-        // Select2
-        $(document).ready(function() {
-            $("#nama_ft").select2({
-
-            });
-        });
-
-        // AOS
-        // document.addEventListener("mousemove", e => {
-        //     AOS.init();
-        //     AOS.refresh();
-        // });
-        $(document).ready(function() {
-            AOS.init();
-        });
-        
-    </script>
+    
 @endsection
