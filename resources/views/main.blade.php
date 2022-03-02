@@ -40,11 +40,11 @@
 
 
 
-    <div class="row">        
+    <div class="row me-0">        
 
         <div class="col-md-4 sidemenu">
 
-            <div class="card">
+            <div class="card border-0">
                 <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBerkasNovel&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=366781520125931" height="80px" class="mx-auto" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
 
@@ -57,7 +57,7 @@
                     </div>
                     <div class="row">
                         @foreach ($listft as $dataft)
-                            <div class="col-lg-4 col-sm-4" data-aos="fade-down">
+                            <div class="col-lg-4 col-sm-4 w-auto" data-aos="fade-down">
                                 <h5 class="card-text mt-2"><a class="namaft badge rounded-pill none"
                                         href="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}"
                                         target="_blank">{{ $dataft->nama_ft }}</a></h5>
@@ -77,9 +77,9 @@
                             <div class="col-md mt-3">
                                 <form action="/carift" method="post">
                                     @csrf
-                                    <select class="form-control mb-2" name="nama_ft" id="nama_ft" readonly>
+                                    <select class="form-control col-md mb-2 mw-100" name="nama_ft" id="nama_ft" readonly>
                                         @foreach ($listftall as $dataft)
-                                            <option value="{{ $dataft->url_ft }}">{{ $dataft->nama_ft }}</option>
+                                            <option value="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft)}}">{{ $dataft->nama_ft }}</option>
                                         @endforeach
                                     </select>
                                     <button type="submit" class="btn btn-secondary col-md-12 mt-1">Cari Update
@@ -113,8 +113,10 @@
             </div>
 
         </div>
-
-        @yield('main')
+        
+        <div class="col-md-8 ms-auto">
+            @yield('main')
+        </div>
 
     </div>
 

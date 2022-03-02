@@ -45,7 +45,7 @@
 
 
 
-    <div class="row mt-3">
+    <div class="row mt-3 me-0">
 
         @if (session('success'))
             <div class="col-md-8 ms-auto alert alert-success">
@@ -91,7 +91,9 @@
             </div>
         </div>
 
-        @yield('main')
+        <div class="col-md-8 ms-auto">
+            @yield('main')
+        </div>
 
     </div>
 

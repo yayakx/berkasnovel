@@ -14,7 +14,7 @@ use App\Http\Controllers\user;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get('/updaterss', [main::class, 'update_rss'])->name('update_rss');
 Route::get('/', [main::class, 'main'])->name('main');
 Route::post('/carinovel', [main::class, 'carinovel']);
 Route::post('/carift', [main::class, 'carift']);

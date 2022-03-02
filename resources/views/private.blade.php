@@ -1,7 +1,7 @@
 @extends('profil')
 
 @section('main')
-    <div class="card col-lg-8 ms-auto">
+<div class="card border-top-0 me-0">
         <div class="card-header bg-main text-white row content">
             <h4 class="text-white col-md-10">Private List Update Novel Terbaru (Dari {{count($listftall)}} FT)</h4>
             <button class="btn btn-outline-light col-md-2 ms-auto refresh" onclick="location.reload()"><span><i

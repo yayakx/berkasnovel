@@ -44,7 +44,7 @@
     });
 
     // Random Badge Color
-    var warna = ['bg-primary', 'bg-secondary', 'bg-warning', 'bg-success', 'bg-danger'];
+    var warna = ['bg-primary', 'bg-secondary', 'bg-dark', 'bg-info',];
     $(document).ready(function() {
         $(".namaft").each(function() {
             var randomize = Math.floor(Math.random() * warna.length);
