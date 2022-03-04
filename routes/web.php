@@ -15,6 +15,9 @@ use App\Http\Controllers\user;
 |
 */
 Route::get('/updaterss', [main::class, 'update_rss'])->name('update_rss');
+Route::post('/req_ft', [main::class, 'req_ft'])->name('req_ft');
+Route::get('/list_reqft', [main::class, 'list_reqft'])->name('list_reqft');
+Route::post('/update_reqft', [main::class, 'update_reqft'])->name('update_reqft');
 Route::get('/', [main::class, 'main'])->name('main');
 Route::post('/carinovel', [main::class, 'carinovel']);
 Route::post('/carift', [main::class, 'carift']);

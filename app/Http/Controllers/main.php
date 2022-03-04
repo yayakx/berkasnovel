@@ -13,19 +13,56 @@ use View;
 use DB;
 use Auth;
 use Sunra\PhpSimple\HtmlDomParser;
+
 set_time_limit(0);
 
 class main extends Controller
 {
     public function main()
     {
-        $data = DB::table('rss')->orderBy('timestamp', 'Desc')->get();       
+        $data = DB::table('rss')->orderBy('timestamp', 'Desc')->get();
         $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
-       
-        // $dd = json_decode($data);        
+        
+        // $url = 'https://fantasykun.blogspot.com/';
+        
+        // $htmldoc = HtmlDomParser::file_get_html($url, false, null, 0);
+        
+        // $cek = $htmldoc->find('main a img', 0);
+        // if ($cek != null) {
+        //     $cek->src;
+        // } elseif ($cek == null) {
+        //     $cek2 = $htmldoc->find('main a span', 0);
+        //     if ($cek2 != null) {
+        //         $cek = 'm2'.$cek2->{'data-image'};
+        //     }
+        //     else if ($cek == null) {
+        //         $cek3 = $htmldoc->find('div a span img', 0);
+        //         if ($cek3 != null) {
+        //             $cek = 'm3'.$cek3->src;
+        //         }
+        //     }
+        //     else if ($cek == null) {
+        //         $cek4 = $htmldoc->find('img.img-responsive', 0);
+        //         if ($cek4 != null) {
+        //             $cek = 'm4'.$cek4->src;
+        //         }
+        //     }
+        // }
+
+        // if ($cek = null) {
+        //     $cek = 'Kosong';
+        // }
+
+                            
+                        
+
+        // $cek = $htmldoc->find('div.entry-content-wrap', 0)->outertext;
+
+        // echo $cek;
+        // echo $cek;
         return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
     }
 
@@ -41,22 +78,23 @@ class main extends Controller
         $listftall = $this->listftall();
         $listft = $this->listft();
 
-        // $url = 'https://www.kiminovel.com/2022/02/aobuta-jilid-1-bab-5-2.html';            
+        // $url = 'https://www.kiminovel.com/2022/02/aobuta-jilid-1-bab-5-2.html';
         // $htmldoc = HtmlDomParser::file_get_html($url, false, null, 0 );
-        // $a = $htmldoc->find('img', 0)->src;                                       
+        // $a = $htmldoc->find('img', 0)->src;
 
         foreach ($data as $item) {
             $cekhash = DB::table('rss')->where('hash', $item->get_id(true))->first();
             if ($cekhash == null) {
                 $htmldoc = HtmlDomParser::file_get_html($item->get_permalink(), false, null, 0);
-                $cekimg = $htmldoc->find('img', 0);
-                if ($cekimg != null) {
-                    $img = $cekimg->src;
-                } else {
-                    $img = 'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
-                }
+                if (!empty($htmldoc)) {
+                    $cekimg = $htmldoc->find('img[border=0]', 0);
+                    if ($cekimg != null) {
+                        $img = $cekimg->src;
+                    } else {
+                        $img = 'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
+                    }
 
-                DB::table('rss')->insert([
+                    DB::table('rss')->insert([
                     'hash'      => $item->get_id(true),
                     'timestamp' => $item->get_date('U'),
                     'title'     => $item->get_title(),
@@ -64,22 +102,21 @@ class main extends Controller
                     'permalink' => $item->get_permalink(),
                     'feed'      => $item->get_feed()->get_link(),
                     'ft'        => $item->get_feed()->get_title(),
-                    'created_at'=> \Carbon\Carbon::now()->toDateTimeString()
                 ]);
 
-                // $new_item = (object) array(
+                    // $new_item = (object) array(
                 // 'hash'      => $item->get_id(true),
                 // 'timestamp' => $item->get_date('j F Y'),
                 // 'title'     => $item->get_title(),
                 // 'thumb'     => $img,
                 // 'permalink' => $item->get_permalink(),
-                // 'feed'      => $item->get_feed()->get_link()            
-            }
-            else {
+                // 'feed'      => $item->get_feed()->get_link()
+                }
+            } else {
                 continue;
             }
         }
-        // $dd = json_decode($data);        
+        // $dd = json_decode($data);
         // return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
     }
 
@@ -112,8 +149,8 @@ class main extends Controller
 
     public function carift(Request $request)
     {
-        $kw = $request->nama_ft;        
-        $data = DB::table('rss')->where('feed','like',"%$kw%")->get();       
+        $kw = $request->nama_ft;
+        $data = DB::table('rss')->where('feed', 'like', "%$kw%")->get();
         $items = $this->paginate($data);
 
         $listftall = $this->listftall();
@@ -126,7 +163,7 @@ class main extends Controller
     public function carinovel(Request $request)
     {
         $kw = $request->cari;
-        $data = DB::table('rss')->where('permalink','like',"%$kw%")->get();
+        $data = DB::table('rss')->where('permalink', 'like', "%$kw%")->get();
         // $data = preg_filter('/$/', '?q='.$kw, $db);
 
         $items = $this->paginate($data);
@@ -206,5 +243,71 @@ class main extends Controller
         }
     
         return redirect('/private');
+    }
+
+    public function req_ft(Request $request)
+    {
+        $this->validate($request, [
+            'nama_ft' => 'required',
+            'url_ft' => 'required',
+            'alasan' => 'required',
+        ]);
+        
+        $feed = FeedReader::read([
+            $request->url_ft.'/rss.xml',
+        ]);
+        $data = $feed->get_items();
+        if ($data == null) {
+            $feed = FeedReader::read([
+                $request->url_ft.'/feed',
+            ]);
+
+            $data = $feed->get_items();
+
+            if ($data == null) {
+                session()->flash("error", "Gagal Ditambahkan Karena FT Tidak Menggunakan Blogger / Wordpress");
+            } else {
+                DB::table('request_ft')->insert([
+                    'nama_ft' => $request->nama_ft,
+                    'url_ft' => $request->url_ft.'feed',
+                    'alasan' => $request->alasan,
+                ]);
+
+                session()->flash("success", "Request FT Berhasil Ditambahkan");
+            }
+        } else {
+            DB::table('request_ft')->insert([
+                'nama_ft' => $request->nama_ft,
+                'url_ft' => $request->url_ft.'/rss.xml',
+                'alasan' => $request->alasan,
+            ]);
+            session()->flash("success", "Request FT Berhasil Ditambahkan");
+        }
+    
+        return redirect('/');
+    }
+
+    public function list_reqft()
+    {
+        $db = DB::table('request_ft')->select('status', 'nama_ft', 'url_ft', DB::raw('count(*) as total'))->groupBy('url_ft')->orderBy('total')->get();
+
+        $listftall = $this->listftall();
+        $listft = $this->listft();
+        
+               
+        // dd($db);
+        return View::make('listrequest', ['items' => $db, 'listft' => $listft, 'listftall' => $listftall]);
+    }
+
+    public function update_reqft(Request $request) 
+    {
+        $cek = DB::table('request_ft')->where('url_ft', $request->url_ft)->update(['status' => $request->status]);
+
+        if ($cek == true) {
+            return back()->with('success', ' Data telah diperbaharui!');
+        }
+        else {
+            return back()->with('error', ' Ada yang Salah');
+        }
     }
 }

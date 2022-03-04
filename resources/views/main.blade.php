@@ -21,31 +21,43 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/private">Private List</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/list_reqft">List Request FT</a>
+                </li>
                 {{-- <li class="nav-item">
             <a class="nav-link disabled" href="#">Donasi</a>                       
         </li> --}}
             </ul>
-            <a href="#"  data-bs-toggle="modal" data-bs-target="#staytune"><button class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
+            <a href="#" data-bs-toggle="modal" data-bs-target="#req_ft"><button
+                    class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1">Ingin Mendaftarkan
                     FT?</button></a>
-                    @if (Auth::check() == true)
-                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i> {{Auth::user()->name}}</a>            
-                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/logout"><i class="fa fa-sign-out-alt"></i> Keluar</a>                
-                    @else
-                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/daftar"><i class="fa fa-user"></i> Daftar</a>
-                    <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i> Masuk</a>            
-                    @endif
-            
+            @if (Auth::check() == true)
+                <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/profil"><i class="fa fa-user"></i>
+                    {{ Auth::user()->name }}</a>
+                <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/logout"><i class="fa fa-sign-out-alt"></i>
+                    Keluar</a>
+            @else
+                <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/daftar"><i class="fa fa-user"></i>
+                    Daftar</a>
+                <a class="btn btn-outline-light my-2 my-sm-0 me-1 ms-1" href="/login"><i class="fa fa-sign-in-alt"></i>
+                    Masuk</a>
+            @endif
+
         </div>
     </nav>
 
 
 
-    <div class="row me-0">        
+    <div class="row me-0">
 
         <div class="col-md-4 sidemenu">
 
             <div class="card border-0">
-                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBerkasNovel&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=366781520125931" height="80px" class="mx-auto" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                <iframe
+                    src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBerkasNovel&tabs&width=340&height=70&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=366781520125931"
+                    height="80px" class="mx-auto" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                    allowfullscreen="true"
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
 
             <div class="card me-auto h-10">
@@ -67,7 +79,7 @@
                                 href="/daftarft">Selengkapnya...</a></h5>
                     </div>
                 </div>
-            </div>            
+            </div>
 
             <div class="card me-auto h-10 col-md">
                 <div class="card-body">
@@ -79,7 +91,8 @@
                                     @csrf
                                     <select class="form-control col-md mb-2 mw-100" name="nama_ft" id="nama_ft" readonly>
                                         @foreach ($listftall as $dataft)
-                                            <option value="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft)}}">{{ $dataft->nama_ft }}</option>
+                                            <option value="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}">
+                                                {{ $dataft->nama_ft }}</option>
                                         @endforeach
                                     </select>
                                     <button type="submit" class="btn btn-secondary col-md-12 mt-1">Cari Update
@@ -113,14 +126,25 @@
             </div>
 
         </div>
-        
+
         <div class="col-md-8 ms-auto">
+            @if (session('success'))
+                <div class="col-md-12 mt-2 ms-auto alert alert-success">
+                    <b>Selamat!</b> {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="col-md-12 mt-2 ms-auto alert alert-danger">
+                    <b>Opps!</b> {{ session('error') }}
+                </div>
+            @endif
+
             @yield('main')
         </div>
 
     </div>
 
-    
+
 
     <!-- Modal Stay Tuned -->
     <div class="modal fade" id="staytune" z-index="99" tabindex="-1" role="dialog" aria-labelledby="modelTitleId"
@@ -136,5 +160,4 @@
             </div>
         </div>
     </div>
-    
 @endsection
