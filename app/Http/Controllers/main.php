@@ -150,7 +150,7 @@ class main extends Controller
     public function carift(Request $request)
     {
         $kw = $request->nama_ft;
-        $data = DB::table('rss')->where('feed', 'like', "%$kw%")->get();
+        $data = DB::table('rss')->where('ft', 'like', "%$kw%")->orderBy('timestamp', 'DESC')->get();
         $items = $this->paginate($data);
 
         $listftall = $this->listftall();

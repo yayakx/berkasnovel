@@ -24,6 +24,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/list_reqft">List Request FT</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark" href="https://mobile.berkasnovel.online">BerkasNovel V2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-dark" href="https://berkasnovel.online/BerkasNovel%20Beta.apk">Download APK</a>
+                </li>
                 {{-- <li class="nav-item">
             <a class="nav-link disabled" href="#">Donasi</a>                       
         </li> --}}
@@ -60,38 +66,18 @@
                     allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
 
-            <div class="card me-auto h-10">
-                <div class="card-body container">
-                    <div class="card-header bg-main">
-                        <a href="/daftarft" class="none">
-                            <h4 class="text-white">FT Terdaftar</h4>
-                        </a>
-                    </div>
-                    <div class="row">
-                        @foreach ($listft as $dataft)
-                            <div class="col-lg-4 col-sm-4 w-auto" data-aos="fade-down">
-                                <h5 class="card-text mt-2"><a class="namaft badge rounded-pill none"
-                                        href="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}"
-                                        target="_blank">{{ $dataft->nama_ft }}</a></h5>
-                            </div>
-                        @endforeach
-                        <h5 class="col-md card-text mt-2"><a class="namaft badge rounded-pill none"
-                                href="/daftarft">Selengkapnya...</a></h5>
-                    </div>
-                </div>
-            </div>
-
             <div class="card me-auto h-10 col-md">
                 <div class="card-body">
                     <h4 class="card-header bg-main text-white">Novel Berdasarkan FT</h4>
                     <div>
                         <div>
                             <div class="col-md mt-3">
-                                <form action="/carift" method="post">
-                                    @csrf
+                                <form action="/carift" method="get">
+                                    {{-- @csrf --}}
                                     <select class="form-control col-md mb-2 mw-100" name="nama_ft" id="nama_ft" readonly>
                                         @foreach ($listftall as $dataft)
-                                            <option value="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}">
+                                            {{-- <option value="{{ str_replace(['rss.xml', 'feed', 'wordpress', 'blogspot', 'http://', 'https://'], '', $dataft->url_ft) }}"> --}}
+                                                <option value="{{ $dataft->nama_ft }}">
                                                 {{ $dataft->nama_ft }}</option>
                                         @endforeach
                                     </select>
@@ -121,6 +107,28 @@
                                 </form>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card me-auto h-10">
+                <div class="card-body container">
+                    <div class="card-header bg-main mb-2">
+                        <a href="/" class="none">
+                            <h4 class="text-white">Trakteer Server</h4>
+                        </a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <script type='text/javascript' src='https://cdn.trakteer.id/js/embed/trbtn.min.js'></script><script type='text/javascript'>(function(){var trbtnId=trbtn.init('Bantu Biaya Server BerkasNovel','#2196F3','https://trakteer.id/berkasnovel','https://cdn.trakteer.id/images/embed/trbtn-icon.png','40');trbtn.draw(trbtnId);})();</script>
+                        <!--@foreach ($listft as $dataft)-->
+                        <!--    <div class="col-lg-4 col-sm-4 w-auto" data-aos="fade-down">-->
+                        <!--        <h5 class="card-text mt-2"><a class="namaft badge rounded-pill none"-->
+                        <!--                href="{{ str_replace(['rss.xml', 'feed'], '', $dataft->url_ft) }}"-->
+                        <!--                target="_blank">{{ $dataft->nama_ft }}</a></h5>-->
+                        <!--    </div>-->
+                        <!--@endforeach-->
+                        <!--<h5 class="col-md card-text mt-2"><a class="namaft badge rounded-pill none"-->
+                        <!--        href="/daftarft">Selengkapnya...</a></h5>-->
                     </div>
                 </div>
             </div>
