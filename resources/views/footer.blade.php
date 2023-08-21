@@ -6,11 +6,11 @@
              <div class="modal-header text-center">
                  <h5 class="mx-auto">Request Penambahan Fan Translation</h5>
              </div>
-             <div class="modal-body ms-3 me-3 mb-0">
+             {{-- <div class="modal-body ms-3 me-3 mb-0">
                  <form action="{{route('req_ft')}}" method="post">
                      @csrf
                      <div id="status" class="alert alert-info">
-                        <strong>Perhatian!</strong> Sementara ini kami hanya menerima FT yang menggunakan Blogger atau Wordpress Saja.
+                        <strong>Perhatian!</strong> Sementara ini kami hanya menerima FT yang menggunakan Blogger atau Wordpress Saja. Harap segera menghubungi FT baik melalui Chat atau komentar setelah mengisi form berikut.
                     </div>
                      <div class="form-group mb-2">
                        <label for="">Nama Fan Translation</label>
@@ -31,7 +31,16 @@
                         <button type="submit" class="btn btn-primary col-md-12">Request</button>
                       </div>
                  </form>
-             </div>
+             </div> --}}
+             <div class="modal-body ms-3 me-3 mb-0">                
+                    <div id="status" class="alert alert-info">
+                       <strong>Perhatian!</strong> Sementara ini kami hanya menerima FT yang menggunakan Blogger atau Wordpress Saja. Harap menghubungi FP baik melalui Chat atau komentar melalui tombol berikut.
+                   </div>                    
+                     <div>
+                       <a href="https://www.facebook.com/BerkasNovel" target="_blank" class="btn btn-primary col-md-12"><i class="fa fa-envelope"></i> Hubungi FP</a>
+                     </div>
+                </form>
+            </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-window-close"></i> Tutup</button>
              </div>
@@ -39,7 +48,7 @@
      </div>
  </div>
 
- {{-- chatango --}}
+ {{-- chatango
  <div class="">
      <script id="cid0020000271796876883" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js"
           style="width: 247px;height: 362px;">
@@ -69,7 +78,7 @@
              }
          }
      </script>
- </div>
+ </div> --}}
 
  <script>
      // Hover Shadow

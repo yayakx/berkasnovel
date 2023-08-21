@@ -20,7 +20,7 @@ Route::post('/req_ft', [main::class, 'req_ft'])->name('req_ft');
 Route::get('/list_reqft', [main::class, 'list_reqft'])->name('list_reqft');
 Route::post('/update_reqft', [main::class, 'update_reqft'])->name('update_reqft');
 Route::get('/', [main::class, 'main'])->name('main');
-Route::post('/carinovel', [main::class, 'carinovel']);
+Route::get('/carinovel', [main::class, 'carinovel']);
 Route::get('/carift', [main::class, 'carift']);
 Route::get('/daftarft', [main::class, 'daftarft']);
 Route::get('/login', [user::class, 'login'])->name('login');
@@ -32,6 +32,7 @@ Route::get('/profil', [main::class, 'private'])->name('private');
 Route::get('/private', [main::class, 'private'])->name('private');
 Route::post('/carift_private', [main::class, 'carift_private'])->name('carift_private');
 Route::post('/tambahft_private', [main::class, 'tambahft_private'])->name('tambahft_private');
+Route::get('/ft', [main::class, 'singleFT']);
 
 // API ROute
 Route::get('/api/post', [api::class, 'get_data'])->name('get_data_api');

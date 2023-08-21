@@ -13,6 +13,7 @@ use View;
 use DB;
 use Auth;
 use Sunra\PhpSimple\HtmlDomParser;
+use App\Models\RSS;
 
 set_time_limit(0);
 
@@ -20,8 +21,8 @@ class main extends Controller
 {
     public function main()
     {
-        $data = DB::table('rss')->orderBy('timestamp', 'Desc')->get();
-        $items = $this->paginate($data);
+        $items = RSS::orderBy('timestamp', 'Desc')->paginate(24);
+        // $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
@@ -86,13 +87,18 @@ class main extends Controller
             $cekhash = DB::table('rss')->where('hash', $item->get_id(true))->first();
             if ($cekhash == null) {
                 $htmldoc = HtmlDomParser::file_get_html($item->get_permalink(), false, null, 0);
-                if (!empty($htmldoc)) {
-                    $cekimg = $htmldoc->find('img[border=0]', 0);
+                if (!empty($htmldoc) || $htmldoc !== false) {
+                    $cek = $htmldoc->find('img[border=0]', 0);
+                    $cek2 = $htmldoc->find('main a span', 0);
+                    $cek3 = $htmldoc->find('div a span img', 0);
+                    $cek4 = $htmldoc->find('img.img-responsive', 0);
+
+                    $cekimg = $cek ?? $cek2 ?? $cek3 ?? $cek4;
                     if ($cekimg != null) {
-                        $img = $cekimg->src;
+                        $img = $cekimg->src ?? $cekimg->{'data-image'};                    
                     } else {
                         $img = 'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
-                    }
+                    }                    
 
                     DB::table('rss')->insert([
                     'hash'      => $item->get_id(true),
@@ -111,12 +117,13 @@ class main extends Controller
                 // 'thumb'     => $img,
                 // 'permalink' => $item->get_permalink(),
                 // 'feed'      => $item->get_feed()->get_link()
+                } else {
+                    continue;
                 }
             } else {
                 continue;
             }
-        }
-        // $dd = json_decode($data);
+        }        
         // return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
     }
 
@@ -150,8 +157,8 @@ class main extends Controller
     public function carift(Request $request)
     {
         $kw = $request->nama_ft;
-        $data = DB::table('rss')->where('ft', 'like', "%$kw%")->orderBy('timestamp', 'DESC')->get();
-        $items = $this->paginate($data);
+        $items = DB::table('rss')->where('ft', 'like', "%$kw%")->orderBy('timestamp', 'DESC')->paginate(24);
+        // $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
@@ -162,17 +169,16 @@ class main extends Controller
 
     public function carinovel(Request $request)
     {
-        $kw = $request->cari;
-        $data = DB::table('rss')->where('permalink', 'like', "%$kw%")->get();
-        // $data = preg_filter('/$/', '?q='.$kw, $db);
-
-        $items = $this->paginate($data);
+        $kw = $request->kw;
+        $items = DB::table('rss')->where('title', 'like', '%'.$kw.'%')->paginate(24);
+        // $data = preg_filter('/$/', '?q='.$kw, $db);        
+        // $items = $this->paginate($data);
 
         $listftall = $this->listftall();
         $listft = $this->listft();
         // dd($data);
         
-        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall]);
+        return View::make('listupdate', ['items' => $items, 'listft' => $listft, 'listftall' => $listftall, 'kw' => $kw]);
     }
 
     public function private()
@@ -309,5 +315,18 @@ class main extends Controller
         else {
             return back()->with('error', ' Ada yang Salah');
         }
+    }
+
+    public function singleFT(Request $request)
+    {
+        $id = $request->id;
+        $ft = DB::table('ft')->where('id_ft', $id)->first();
+        $url = $ft->url_ft;        
+        $parsedUrl = parse_url($url);        
+        $mainUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'];
+        $items = RSS::where('feed', 'like', '%'.$mainUrl.'%');
+        $total_rilis = $items->count();                
+        
+        return View::make('singe-ft', ['items' => $items->paginate(12), 'ft' => $ft, 'id' => $id, 'total_rilis' => $total_rilis]);
     }
 }

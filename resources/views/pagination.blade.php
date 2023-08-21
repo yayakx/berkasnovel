@@ -13,9 +13,9 @@
     <ul class="">
        
         @if ($paginator->onFirstPage())
-            <li class="disabled"><span>← Previous</span></li>
+            <li class="disabled"><span></span></li>
         @else
-            <li><a href="{{ $paginator->previousPageUrl() }}" rel="prev">← Previous</a></li>
+            <li><a class="btn btn-dark" href="{{ $paginator->previousPageUrl() }}" rel="prev">← Sebelumnya</a></li>
         @endif
 
 
@@ -31,9 +31,9 @@
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="active my-active"><span>{{ $page }}</span></li>
+                        <li class="active my-active btn btn-dark text-primary"><span>{{ $page }}</span></li>
                     @else
-                        <li><a href="{{ $url }}">{{ $page }}</a></li>
+                        <li><a class="btn btn-dark" href="{{ $url }}">{{ $page }}</a></li>
                     @endif
                 @endforeach
             @endif
@@ -42,9 +42,9 @@
 
         
         @if ($paginator->hasMorePages())
-            <li><a href="{{ $paginator->nextPageUrl() }}" rel="next">Next →</a></li>
+            <li><a class="btn btn-dark" href="{{ $paginator->nextPageUrl() }}" rel="next">Selanjutnya →</a></li>
         @else
-            <li class="disabled"><span>Next →</span></li>
+            <li class="disabled"><span>Selanjutnya →</span></li>
         @endif
     </ul>
 @endif 
